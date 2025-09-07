@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Badges</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background: #f4f4f4;
+    }
+    h1 { color: #333; }
+    select, input, button {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    .badge-preview {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Badges</h1>
+
+  <label for="category">Categoria:</label>
+  <select id="category">
+    <option value="">Selecione</option>
+    <option value="datacenter">Infraestrutura para Datacenters</option>
+    <option value="firewall">Soluções de Firewall</option>
+    <option value="network">Soluções de Redes</option>
+  </select>
+
+  <label for="vendor">Fabricante:</label>
+  <select id="vendor">
+    <option value="">Selecione</option>
+  </select>
+
+  <label for="color">Cor do badge:</label>
+  <input type="color" id="color" value="#0078D6">
+
+  <button id="generate">Gerar Badge</button>
+
+  <div class="badge-preview" id="preview"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

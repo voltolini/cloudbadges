@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Badges Netlify</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    select, input { margin: 5px 0; padding: 5px; width: 300px; }
+    .preview { margin-top: 10px; }
+    .container { margin-bottom: 20px; }
+    .obs { font-size: 0.9em; color: #555; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Badges Netlify</h1>
+
+  <div class="container">
+    <label>Tipo de Badge:</label><br>
+    <select id="tipoBadge">
+      <option value="">Selecione</option>
+      <option value="shields.io">shields.io</option>
+      <option value="custom-icon-badges">custom-icon-badges</option>
+    </select><br>
+
+    <label>Nome da Badge:</label><br>
+    <input type="text" id="badge" placeholder="Digite o texto da badge"><br>
+
+    <label>Cor da Badge (opcional):</label><br>
+    <select id="corBadge">
+      <option value="">Selecione</option>
+      <option value="yellow">Amarelo</option>
+      <option value="gold">Dourado</option>
+      <option value="blue">Azul</option>
+      <option value="white">Branco</option>
+      <option value="gray">Cinza</option>
+      <option value="orange">Laranja</option>
+      <option value="brown">Marrom</option>
+      <option value="multicolor">Multicolorido</option>
+      <option value="black">Preto</option>
+      <option value="pink">Rosa</option>
+      <option value="purple">Roxo</option>
+      <option value="green">Verde</option>
+      <option value="red">Vermelho</option>
+    </select><br>
+
+    <label>Estilo da Badge:</label><br>
+    <select id="estiloBadge">
+      <option value="">Selecione</option>
+      <option value="flat">flat</option>
+      <option value="flat-square">flat-square</option>
+      <option value="plastic">plastic</option>
+      <option value="for-the-badge">for-the-badge</option>
+      <option value="social">social</option>
+    </select><br>
+
+    <div class="obs">Para gerar a badge com a logo, utilizar no menu Tipo de Badge a opção custom-icon-badge</div>
+
+    <div class="preview" id="preview"></div>
+  </div>
+
+  <div class="container">
+    <label>Badges Pré-existentes:</label><br>
+    <select id="badgesPre">
+      <option value="">Selecione</option>
+      <option value="https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white">HTML</option>
+      <option value="https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=fff">Bash</option>
+      <option value="https://img.shields.io/badge/Markdown-%23000000.svg?logo=markdown&logoColor=white">Markdown</option>
+      <option value="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff">Python</option>
+      <option value="https://img.shields.io/badge/Go-%2300ADD8.svg?&logo=go&logoColor=white">Go</option>
+      <option value="https://img.shields.io/badge/Powershell-2CA5E0?style=flat&logo=powershell&logoColor=white">Powershell</option>
+      <option value="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff">MySQL</option>
+      <option value="https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white">PostgreSQL</option>
+      <option value="https://img.shields.io/badge/MariaDB-003545?logo=mariadb&logoColor=white">MariaDB</option>
+      <option value="https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white">MongoDB</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Microsoft%20SQL%20Server-CC2927?logo=mssqlserver-white&logoColor=white">SQL Server</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Oracle-F80000?logo=oracle&logoColor=fff">Oracle</option>
+      <option value="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black">Linux</option>
+      <option value="https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=fff">Debian</option>
+      <option value="https://img.shields.io/badge/CentOS-262577?logo=centos&logoColor=white">CentOS</option>
+      <option value="https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=fff">Rocky Linux</option>
+      <option value="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white">Ubuntu</option>
+      <option value="https://img.shields.io/badge/Red%20Hat-EE0000?logo=redhat&logoColor=white">Red Hat</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows-0078D6?logo=windows11&logoColor=white">Windows</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2008-0078D6?logo=windows11&logoColor=white">Windows Server 2008</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2008_R2-0078D6?logo=windows11&logoColor=white">Windows Server 2008 R2</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2012-0078D6?logo=windows11&logoColor=white">Windows Server 2012</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2012_R2-0078D6?logo=windows11&logoColor=white">Windows Server 2012 R2</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2016-0078D6?logo=windows11&logoColor=white">Windows Server 2016</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2019-0078D6?logo=windows11&logoColor=white">Windows Server 2019</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2022-0078D6?logo=windows11&logoColor=white">Windows Server 2022</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2025-0078D6?logo=windows11&logoColor=white">Windows Server 2025</option>
+    </select>
+    <div class="preview" id="previewPre"></div>
+  </div>
+
+  <script>
+    const tipoBadge = document.getElementById('tipoBadge');
+    const badge = document.getElementById('badge');
+    const corBadge = document.getElementById('corBadge');
+    const estiloBadge = document.getElementById('estiloBadge');
+    const preview = document.getElementById('preview');
+
+    const badgesPre = document.getElementById('badgesPre');
+    const previewPre = document.getElementById('previewPre');
+
+    function gerarBadge() {
+      const tipo = tipoBadge.value;
+      const nome = badge.value;
+      const cor = corBadge.value;
+      const estilo = estiloBadge.value;
+      if (!tipo || !nome) return;
+
+      let url = '';
+      if (tipo === 'shields.io') {
+        url = `https://img.shields.io/badge/${encodeURIComponent(nome)}${cor ? '-' + encodeURIComponent(cor) : ''}${estilo ? `?style=${estilo}` : ''}.svg`;
+      } else if (tipo === 'custom-icon-badges') {
+        url = `https://custom-icon-badges.demolab.com/badge/${encodeURIComponent(nome)}${cor ? '-' + encodeURIComponent(cor) : ''}.svg`;
+      }
+
+      preview.innerHTML = `<img src="${url}" alt="Badge">`;
+    }
+
+    tipoBadge.addEventListener('change', gerarBadge);
+    badge.addEventListener('input', gerarBadge);
+    corBadge.addEventListener('change', gerarBadge);
+    estiloBadge.addEventListener('change', gerarBadge);
+
+    badgesPre.addEventListener('change', () => {
+      const url = badgesPre.value;
+      previewPre.innerHTML = url ? `<img src="${url}" alt="Badge Pré-existente">` : '';
+    });
+  </script>
+</body>
+</html>

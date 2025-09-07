@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Badges Netlify</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { margin-bottom: 30px; }
+    select, input { margin: 5px 0; padding: 5px; width: 200px; }
+    .preview { margin-top: 10px; }
+    .note { color: gray; font-size: 0.9em; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Gerador de Badges Netlify</h1>
+
+  <!-- Menu principal -->
+  <div class="container">
+    <h2>Gerador Personalizado</h2>
+    
+    <label>Tipo de Badge:</label>
+    <select id="tipoBadge">
+      <option value="">Selecione</option>
+      <option value="shields.io">Shields.io</option>
+      <option value="custom-icon-badges">Custom Icon Badge</option>
+    </select><br>
+
+    <label>Badge:</label>
+    <select id="badge">
+      <option value="">Selecione</option>
+      <option value="HTML">HTML</option>
+      <option value="Bash">Bash</option>
+      <option value="Markdown">Markdown</option>
+      <option value="Python">Python</option>
+      <option value="Go">Go</option>
+      <option value="Powershell">Powershell</option>
+      <option value="MySQL">MySQL</option>
+      <option value="PostgreSQL">PostgreSQL</option>
+      <option value="MariaDB">MariaDB</option>
+      <option value="MongoDB">MongoDB</option>
+      <option value="SQL Server">SQL Server</option>
+      <option value="Oracle">Oracle</option>
+      <option value="Linux">Linux</option>
+      <option value="Debian">Debian</option>
+      <option value="CentOS">CentOS</option>
+      <option value="Rocky Linux">Rocky Linux</option>
+      <option value="Ubuntu">Ubuntu</option>
+      <option value="Red Hat">Red Hat</option>
+      <option value="Windows">Windows</option>
+      <option value="Windows Server 2008">Windows Server 2008</option>
+      <option value="Windows Server 2008 R2">Windows Server 2008 R2</option>
+      <option value="Windows Server 2012">Windows Server 2012</option>
+      <option value="Windows Server 2012 R2">Windows Server 2012 R2</option>
+      <option value="Windows Server 2016">Windows Server 2016</option>
+      <option value="Windows Server 2019">Windows Server 2019</option>
+      <option value="Windows Server 2022">Windows Server 2022</option>
+      <option value="Windows Server 2025">Windows Server 2025</option>
+      <option value="Dell">Dell</option>
+      <option value="Lenovo">Lenovo</option>
+      <option value="IBM">IBM</option>
+      <option value="HPE">HPE</option>
+      <option value="Fortinet">Fortinet</option>
+      <option value="Mikrotik">Mikrotik</option>
+      <option value="Palo Alto Networks">Palo Alto Networks</option>
+      <option value="Extreme Networks">Extreme Networks</option>
+      <option value="Cisco">Cisco</option>
+      <option value="pfSense">pfSense</option>
+      <option value="SonicWall">SonicWall</option>
+      <option value="VMware ESXi">VMware ESXi</option>
+      <option value="Proxmox">Proxmox</option>
+      <option value="Windows Hyper-V">Windows Hyper-V</option>
+      <option value="Nutanix">Nutanix</option>
+      <option value="GitHub">GitHub</option>
+      <option value="Stack Overflow">Stack Overflow</option>
+      <option value="Heroku">Heroku</option>
+      <option value="AWS">AWS</option>
+      <option value="Azure">Azure</option>
+      <option value="Oracle Cloud">Oracle Cloud</option>
+      <option value="Google Cloud">Google Cloud</option>
+      <option value="Cloudflare">Cloudflare</option>
+      <option value="Git">Git</option>
+      <option value="Kubernetes">Kubernetes</option>
+      <option value="Docker">Docker</option>
+      <option value="Terraform">Terraform</option>
+      <option value="NGINX">NGINX</option>
+    </select><br>
+
+    <label>Cor da Badge:</label>
+    <select id="corBadge">
+      <option value="">Selecione</option>
+      <option value="yellow">Amarelo</option>
+      <option value="gold">Dourado</option>
+      <option value="blue">Azul</option>
+      <option value="white">Branco</option>
+      <option value="gray">Cinza</option>
+      <option value="orange">Laranja</option>
+      <option value="brown">Marrom</option>
+      <option value="multicolor">Multicolorido</option>
+      <option value="black">Preto</option>
+      <option value="pink">Rosa</option>
+      <option value="purple">Roxo</option>
+      <option value="green">Verde</option>
+      <option value="red">Vermelho</option>
+    </select><br>
+
+    <label>Estilo:</label>
+    <select id="estiloBadge">
+      <option value="">Selecione</option>
+      <option value="flat">Flat</option>
+      <option value="flat-square">Flat Square</option>
+      <option value="plastic">Plastic</option>
+      <option value="for-the-badge">For The Badge</option>
+      <option value="social">Social</option>
+    </select>
+
+    <div class="note">Para gerar a badge com a logo, utilizar no menu Tipo de Badge a opção custom-icon-badge</div>
+    <div class="preview" id="preview"></div>
+  </div>
+
+  <!-- Menu extra de badges pré-existentes -->
+  <div class="container">
+    <h2>Badges Pré-existentes ⚡</h2>
+    <label>Selecionar badge:</label>
+    <select id="badgesPre">
+      <option value="">Selecione</option>
+      <option value="https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white">HTML</option>
+      <option value="https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=fff">Bash</option>
+      <option value="https://img.shields.io/badge/Markdown-%23000000.svg?logo=markdown&logoColor=white">Markdown</option>
+      <option value="https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff">Python</option>
+      <option value="https://img.shields.io/badge/Go-%2300ADD8.svg?&logo=go&logoColor=white">Go</option>
+      <option value="https://img.shields.io/badge/Powershell-2CA5E0?style=flat&logo=powershell&logoColor=white">Powershell</option>
+      <option value="https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff">MySQL</option>
+      <option value="https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white">PostgreSQL</option>
+      <option value="https://img.shields.io/badge/MariaDB-003545?logo=mariadb&logoColor=white">MariaDB</option>
+      <option value="https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white">MongoDB</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Microsoft%20SQL%20Server-CC2927?logo=mssqlserver-white&logoColor=white">SQL Server</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Oracle-F80000?logo=oracle&logoColor=fff">Oracle</option>
+      <option value="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black">Linux</option>
+      <option value="https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=fff">Debian</option>
+      <option value="https://img.shields.io/badge/CentOS-262577?logo=centos&logoColor=white">CentOS</option>
+      <option value="https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=fff">Rocky Linux</option>
+      <option value="https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white">Ubuntu</option>
+      <option value="https://img.shields.io/badge/Red%20Hat-EE0000?logo=redhat&logoColor=white">Red Hat</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows-0078D6?logo=windows11&logoColor=white">Windows</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2008-0078D6?logo=windows11&logoColor=white">Windows Server 2008</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2008_R2-0078D6?logo=windows11&logoColor=white">Windows Server 2008 R2</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2012-0078D6?logo=windows11&logoColor=white">Windows Server 2012</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2012_R2-0078D6?logo=windows11&logoColor=white">Windows Server 2012 R2</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2016-0078D6?logo=windows11&logoColor=white">Windows Server 2016</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2019-0078D6?logo=windows11&logoColor=white">Windows Server 2019</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2022-0078D6?logo=windows11&logoColor=white">Windows Server 2022</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Server_2025-0078D6?logo=windows11&logoColor=white">Windows Server 2025</option>
+      <option value="https://img.shields.io/badge/Dell-007DB8?style=flat&logo=dell&logoColor=white">Dell</option>
+      <option value="https://img.shields.io/badge/Lenovo-E2231A?style=flat&logo=lenovo&logoColor=white">Lenovo</option>
+      <option value="https://img.shields.io/badge/IBM-052FAD?style=flat&logo=ibm&logoColor=white">IBM</option>
+      <option value="https://img.shields.io/badge/HPE-00B388?style=flat&logo=hewlettpackardenterprise&logoColor=white">HPE</option>
+      <option value="https://img.shields.io/badge/Fortinet-EE3124?style=flat&logo=fortinet&logoColor=white">Fortinet</option>
+      <option value="https://img.shields.io/badge/Mikrotik-293239?style=flat&logo=mikrotik&logoColor=white">Mikrotik</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Palo%20Alto%20Networks-0073E7.svg?logo=paloaltonetworks&logoColor=white&style=flat">Palo Alto Networks</option>
+      <option value="https://img.shields.io/badge/Extreme_Networks-662D91?style=flat&logoColor=white">Extreme Networks</option>
+      <option value="https://img.shields.io/badge/Cisco-1BA0D7?style=flat&logo=cisco&logoColor=white">Cisco</option>
+      <option value="https://img.shields.io/badge/pfSense-212121?style=flat&logo=pfsense&logoColor=white">pfSense</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/SonicWall-FF6600.svg?logo=sonicwall&logoColor=white&style=flat">SonicWall</option>
+      <option value="https://img.shields.io/badge/VMware_ESXi-607078?style=flat&logo=vmware&logoColor=white">VMware ESXi</option>
+      <option value="https://img.shields.io/badge/Proxmox-E57000?style=flat&logo=proxmox&logoColor=white">Proxmox</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Windows_Hyper--V-0078D6?logo=windows11&logoColor=white">Windows Hyper-V</option>
+      <option value="https://img.shields.io/badge/Nutanix-0078D6?style=flat&logo=nutanix&logoColor=white">Nutanix</option>
+      <option value="https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white">GitHub</option>
+      <option value="https://img.shields.io/badge/-Stack%20Overflow-FE7A16?logo=stack-overflow&logoColor=white">Stack Overflow</option>
+      <option value="https://img.shields.io/badge/Heroku-430098?logo=heroku&logoColor=fffe">Heroku</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?logo=aws&logoColor=white">AWS</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Microsoft%20Azure-0089D6?logo=msazure&logoColor=white">Azure</option>
+      <option value="https://custom-icon-badges.demolab.com/badge/Oracle%20Cloud-F80000?logo=oracle&logoColor=white">Oracle Cloud</option>
+      <option value="https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white">Google Cloud</option>
+      <option value="https://img.shields.io/badge/Cloudflare-F38020?logo=Cloudflare&logoColor=white">Cloudflare</option>
+      <option value="https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff">Git</option>
+      <option value="https://img.shields.io/badge/Kubernetes-326CE5?logo=kubernetes&logoColor=fff">Kubernetes</option>
+      <option value="https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff">Docker</option>
+      <option value="https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=fff">Terraform</option>
+      <option value="https://img.shields.io/badge/NGINX-009639?style=flat&logo=nginx&logoColor=white">NGINX</option>
+    </select>
+    <div class="preview" id="previewPre"></div>
+  </div>
+
+  <script>
+    const tipoBadge = document.getElementById('tipoBadge');
+    const badge = document.getElementById('badge');
+    const corBadge = document.getElementById('corBadge');
+    const estiloBadge = document.getElementById('estiloBadge');
+    const preview = document.getElementById('preview');
+
+    const badgesPre = document.getElementById('badgesPre');
+    const previewPre = document.getElementById('previewPre');
+
+    function gerarBadge() {
+      const tipo = tipoBadge.value;
+      const nome = badge.value;
+      const cor = corBadge.value;
+      const estilo = estiloBadge.value;
+      if (!tipo || !nome) return;
+
+      let url = '';
+      if (tipo === 'shields.io') {
+        url = `https://img.shields.io/badge/${encodeURIComponent(nome)}${cor ? '-' + encodeURIComponent(cor) : ''}${estilo ? `?style=${estilo}` : ''}.svg`;
+      } else if (tipo === 'custom-icon-badges') {
+        url = `https://custom-icon-badges.demolab.com/badge/${encodeURIComponent(nome)}${cor ? '-' + encodeURIComponent(cor) : ''}.svg`;
+      }
+
+      preview.innerHTML = `<img src="${url}" alt="Badge">`;
+    }
+
+    tipoBadge.addEventListener('change', gerarBadge);
+    badge.addEventListener('change', gerarBadge);
+    corBadge.addEventListener('change', gerarBadge);
+    estiloBadge.addEventListener('change', gerarBadge);
+
+    badgesPre.addEventListener('change', () => {
+      const url = badgesPre.value;
+      if (!url) return previewPre.innerHTML = '';
+      previewPre.innerHTML = `<img src="${url}" alt="Badge Pré-existente">`;
+    });
+  </script>
+</body>
+</html>

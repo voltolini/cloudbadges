@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Badges</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f7;
+      margin: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    select, button, input {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      background: #0078D4;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+    button:hover {
+      background: #005ea1;
+    }
+    .preview {
+      margin-top: 20px;
+    }
+    img {
+      margin: 10px 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    .note {
+      margin-top: 15px;
+      padding: 10px;
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-radius: 6px;
+      color: #92400e;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Gerador de Badges 🚀</h2>
+
+    <label>Categoria:</label>
+    <select id="categoria">
+      <option value="">Selecione</option>
+    </select>
+
+    <label>Tecnologia/Fabricante:</label>
+    <select id="tecnologia">
+      <option value="">Selecione</option>
+    </select>
+
+    <label>Subtecnologia/Solução:</label>
+    <select id="subtec">
+      <option value="">Selecione</option>
+    </select>
+
+    <label>Tipo de Badge:</label>
+    <select id="tipo">
+      <option value="">Selecione</option>
+      <option value="shields">shields.io</option>
+      <option value="custom">custom-icon-badges.demolab.com</option>
+    </select>
+
+    <label>Estilo:</label>
+    <select id="estilo">
+      <option value="">Selecione</option>
+      <option value="flat">flat</option>
+      <option value="flat-square">flat-square</option>
+      <option value="plastic">plastic</option>
+      <option value="for-the-badge">for-the-badge</option>
+      <option value="social">social</option>
+    </select>
+
+    <label>Cor da Badge (fundo):</label>
+    <select id="cor">
+      <option value="">Selecione</option>
+      <option value="FFFF00">Amarelo</option>
+      <option value="FFD700">Dourado</option>
+      <option value="0078D4">Azul</option>
+      <option value="FFFFFF">Branco</option>
+      <option value="808080">Cinza</option>
+      <option value="F39C12">Laranja</option>
+      <option value="8B4513">Marrom</option>
+      <option value="FF69B4">Rosa</option>
+      <option value="800080">Roxo</option>
+      <option value="00B388">Verde</option>
+      <option value="EE0000">Vermelho</option>
+      <option value="000000">Preto</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="color" id="corCustom" value="#0078D4" style="display:none;">
+
+    <label>Cor do Logo:</label>
+    <select id="logoColor">
+      <option value="">Selecione</option>
+      <option value="FFFF00">Amarelo</option>
+      <option value="FFD700">Dourado</option>
+      <option value="0078D4">Azul</option>
+      <option value="FFFFFF">Branco</option>
+      <option value="808080">Cinza</option>
+      <option value="F39C12">Laranja</option>
+      <option value="8B4513">Marrom</option>
+      <option value="FF69B4">Rosa</option>
+      <option value="800080">Roxo</option>
+      <option value="00B388">Verde</option>
+      <option value="EE0000">Vermelho</option>
+      <option value="000000">Preto</option>
+      <option value="custom">Custom</option>
+    </select>
+    <input type="color" id="logoColorCustom" value="#FFFFFF" style="display:none;">
+
+    <button onclick="gerarBadge()">Gerar Badge</button>
+
+    <div class="note">
+      💡 Para gerar a badge com a logo, utilizar no menu <b>Tipo de Badge</b> a opção <b>custom-icon-badge</b>.
+    </div>
+
+    <div class="preview" id="preview"></div>
+  </div>
+
+  <script>
+    const data = {
+      /* Estrutura de categorias, tecnologias e subtecnologias já existente */
+    };
+
+    const categoria = document.getElementById("categoria");
+    const tecnologia = document.getElementById("tecnologia");
+    const subtec = document.getElementById("subtec");
+    const cor = document.getElementById("cor");
+    const corCustom = document.getElementById("corCustom");
+    const logoColor = document.getElementById("logoColor");
+    const logoColorCustom = document.getElementById("logoColorCustom");
+
+    // Preencher categoria
+    Object.keys(data).forEach(cat => {
+      let opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      categoria.appendChild(opt);
+    });
+
+    categoria.addEventListener("change", () => {
+      tecnologia.innerHTML = "<option value=''>Selecione</option>";
+      subtec.innerHTML = "<option value=''>Selecione</option>";
+      if (!categoria.value) return;
+      Object.keys(data[categoria.value]).forEach(tec => {
+        let opt = document.createElement("option");
+        opt.value = tec;
+        opt.textContent = tec;
+        tecnologia.appendChild(opt);
+      });
+    });
+
+    tecnologia.addEventListener("change", () => {
+      subtec.innerHTML = "<option value=''>Selecione</option>";
+      if (!categoria.value || !tecnologia.value) return;
+      data[categoria.value][tecnologia.value].forEach(st => {
+        let opt = document.createElement("option");
+        opt.value = st;
+        opt.textContent = st;
+        subtec.appendChild(opt);
+      });
+    });
+
+    cor.addEventListener("change", () => {
+      corCustom.style.display = cor.value === "custom" ? "block" : "none";
+    });
+
+    logoColor.addEventListener("change", () => {
+      logoColorCustom.style.display = logoColor.value === "custom" ? "block" : "none";
+    });
+
+    function gerarBadge() {
+      const tec = tecnologia.value;
+      const st = subtec.value;
+      const tipo = document.getElementById("tipo").value;
+      const estilo = document.getElementById("estilo").value;
+
+      // Se cor não for selecionada, fica vazia (opcional)
+      let corValue = cor.value && cor.value !== "custom" ? cor.value : (cor.value === "custom" ? corCustom.value.replace("#","") : "");
+      let logoColorValue = logoColor.value && logoColor.value !== "custom" ? logoColor.value : (logoColor.value === "custom" ? logoColorCustom.value.replace("#","") : "");
+
+      if (!tec || !tipo || !estilo) {
+        document.getElementById("preview").innerHTML = `<p style="color:red;">⚠️ Selecione Categoria, Tecnologia e Tipo de Badge antes de gerar.</p>`;
+        return;
+      }
+
+      let label = st ? `${tec} ${st}` : tec;
+      let url = "";
+
+      if (tipo === "shields") {
+        url = `https://img.shields.io/badge/${encodeURIComponent(label)}-${corValue}?style=${estilo}${logoColorValue ? "&logoColor=" + logoColorValue : ""}&logo=${encodeURIComponent(tec.toLowerCase())}`;
+      } else {
+        url = `https://custom-icon-badges.demolab.com/badge/${encodeURIComponent(label)}-${corValue}.svg?${logoColorValue ? "logoColor=" + logoColorValue + "&" : ""}logo=${encodeURIComponent(tec.toLowerCase())}&style=${estilo}`;
+      }
+
+      document.getElementById("preview").innerHTML = `
+        <h3>Preview:</h3>
+        <img src="${url}" alt="badge"><br>
+        <h3>Markdown:</h3>
+        <pre>![${label}](${url})</pre>
+        <h3>URL:</h3>
+        <pre>${url}</pre>
+      `;
+    }
+
+    /* 
+      Para facilitar a inserção de badges já conhecidas, pode-se criar um array/objeto com URLs:
+      const badgesPreExistentes = [
+        "https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white"
+		"https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=fff"
+		"https://img.shields.io/badge/Markdown-%23000000.svg?logo=markdown&logoColor=white"
+		"https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff"
+		"https://img.shields.io/badge/Go-%2300ADD8.svg?&logo=go&logoColor=white"
+		"https://img.shields.io/badge/Powershell-2CA5E0?style=flat&logo=powershell&logoColor=white"
+		"https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff"
+		"https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white"
+		"https://img.shields.io/badge/MariaDB-003545?logo=mariadb&logoColor=white"
+		"https://img.shields.io/badge/MongoDB-%234ea94b.svg?logo=mongodb&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Microsoft%20SQL%20Server-CC2927?logo=mssqlserver-white&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Oracle-F80000?logo=oracle&logoColor=fff"
+		"https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black"
+		"https://img.shields.io/badge/Debian-A81D33?logo=debian&logoColor=fff"
+		"https://img.shields.io/badge/CentOS-262577?logo=centos&logoColor=white"
+		"https://img.shields.io/badge/Rocky%20Linux-10B981?logo=rockylinux&logoColor=fff"
+		"https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white"
+		"https://img.shields.io/badge/Red%20Hat-EE0000?logo=redhat&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2008-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2008_R2-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2012-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2012_R2-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2016-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2019-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2022-0078D6?logo=windows11&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Server_2025-0078D6?logo=windows11&logoColor=white"
+		"https://img.shields.io/badge/Dell-007DB8?style=flat&logo=dell&logoColor=white"
+		"https://img.shields.io/badge/Lenovo-E2231A?style=flat&logo=lenovo&logoColor=white"
+		"https://img.shields.io/badge/IBM-052FAD?style=flat&logo=ibm&logoColor=white"
+		"https://img.shields.io/badge/HPE-00B388?style=flat&logo=hewlettpackardenterprise&logoColor=white"
+		"https://img.shields.io/badge/Fortinet-EE3124?style=flat&logo=fortinet&logoColor=white"
+		"https://img.shields.io/badge/Mikrotik-293239?style=flat&logo=mikrotik&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Palo%20Alto%20Networks-0073E7.svg?logo=paloaltonetworks&logoColor=white&style=flat"
+		"https://img.shields.io/badge/Extreme_Networks-662D91?style=flat&logoColor=white"
+		"https://img.shields.io/badge/Cisco-1BA0D7?style=flat&logo=cisco&logoColor=white"
+		"https://img.shields.io/badge/pfSense-212121?style=flat&logo=pfsense&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/SonicWall-FF6600.svg?logo=sonicwall&logoColor=white&style=flat"
+		"https://img.shields.io/badge/VMware_ESXi-607078?style=flat&logo=vmware&logoColor=white"
+		"https://img.shields.io/badge/Proxmox-E57000?style=flat&logo=proxmox&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Windows_Hyper--V-0078D6?logo=windows11&logoColor=white"
+		"https://img.shields.io/badge/Nutanix-0078D6?style=flat&logo=nutanix&logoColor=white"
+		"https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white"
+		"https://img.shields.io/badge/-Stack%20Overflow-FE7A16?logo=stack-overflow&logoColor=white"
+		"https://img.shields.io/badge/Heroku-430098?logo=heroku&logoColor=fffe"
+		"https://custom-icon-badges.demolab.com/badge/AWS-%23FF9900.svg?logo=aws&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Microsoft%20Azure-0089D6?logo=msazure&logoColor=white"
+		"https://custom-icon-badges.demolab.com/badge/Oracle%20Cloud-F80000?logo=oracle&logoColor=white"
+		"https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white"
+		"https://img.shields.io/badge/Cloudflare-F38020?logo=Cloudflare&logoColor=white"
+		"https://img.shields.io/badge/Git-F05032?logo=git&logoColor=fff"
+		"https://img.shields.io/badge/Kubernetes-326CE5?logo=kubernetes&logoColor=fff"
+		"https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff"
+		"https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=fff"
+		"https://img.shields.io/badge/NGINX-009639?style=flat&logo=nginx&logoColor=white"
+      ];
+      // Pode-se criar função de seleção rápida para essas badges.
+    */
+  </script>
+</body>
+</html>

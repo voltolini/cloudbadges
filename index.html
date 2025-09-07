@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Badges</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f7;
+      margin: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    select, button, input {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      background: #0078D4;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+    button:hover {
+      background: #005ea1;
+    }
+    .preview {
+      margin-top: 20px;
+    }
+    img {
+      margin: 10px 0;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Gerador de Badges 🚀</h2>
+
+    <label>Categoria:</label>
+    <select id="categoria"></select>
+
+    <label>Tecnologia/Fabricante:</label>
+    <select id="tecnologia"></select>
+
+    <label>Subtecnologia/Solução:</label>
+    <select id="subtec"></select>
+
+    <label>Tipo de Badge:</label>
+    <select id="tipo">
+      <option value="shields">shields.io</option>
+      <option value="custom">custom-icon-badges.demolab.com</option>
+    </select>
+
+    <label>Estilo:</label>
+    <select id="estilo">
+      <option value="flat">flat</option>
+      <option value="flat-square">flat-square</option>
+      <option value="plastic">plastic</option>
+      <option value="for-the-badge">for-the-badge</option>
+      <option value="social">social</option>
+    </select>
+
+    <button onclick="gerarBadge()">Gerar Badge</button>
+
+    <div class="preview" id="preview"></div>
+  </div>
+
+  <script>
+    // Base de dados: categorias → tecnologias → subtecnologias
+    const data = {
+      "Infra/TI": {
+        "Dell": ["PowerEdge", "PowerStore", "PowerMax", "Unity XT", "VxRail", "Data Domain"],
+        "Lenovo": ["ThinkSystem", "ThinkAgile HX", "ThinkAgile VX", "DM Series", "DE Series"],
+        "IBM": ["Power Systems", "zSeries", "FlashSystem", "WebSphere", "MQ", "Watson"],
+        "HPE": ["ProLiant", "Synergy", "Nimble", "3PAR", "Aruba", "SimpliVity"],
+        "Microsoft": ["Windows Server", "Hyper-V", "System Center", "Azure Stack HCI"],
+        "Cisco": ["Catalyst", "Nexus", "UCS", "ASA", "Firepower", "Umbrella", "ISE"],
+        "Cisco Meraki": ["MR APs", "MX SD-WAN", "MS Switches", "Systems Manager"],
+        "Fortinet": ["FortiGate", "FortiAnalyzer", "FortiSwitch", "FortiAP", "FortiWeb"],
+        "Mikrotik": ["RouterOS", "CCR", "CHR", "SwitchOS"],
+        "VMware": ["vSphere", "vCenter", "vSAN", "NSX", "vRealize", "Tanzu"],
+        "Red Hat": ["RHEL", "OpenShift", "Ansible", "JBoss", "RHV"],
+        "Proxmox": ["VE", "Backup Server", "Mail Gateway"],
+        "TrueNAS": ["CORE", "SCALE"]
+      },
+      "Observabilidade": {
+        "Datadog": ["APM", "Logs", "Infra Monitoring", "Synthetics"],
+        "Dynatrace": ["OneAgent", "APM", "RUM", "Davis AI"],
+        "New Relic": ["APM", "Browser Monitoring", "Infra Monitoring"],
+        "Zabbix": ["Network Monitoring", "Web Scenarios", "Proxy"],
+        "Prometheus": ["Alertmanager", "Exporters", "Pushgateway"],
+        "OpenTelemetry": ["Tracing", "Metrics", "Logs"],
+        "Grafana": ["Loki", "Tempo", "Mimir", "Grafana Cloud"]
+      },
+      "DevOps": {
+        "Ansible": ["Playbooks", "AWX", "Tower"],
+        "Helm": ["Charts", "Repositories"],
+        "Puppet": ["Enterprise", "Bolt"],
+        "Chef": ["Infra", "Habitat", "InSpec"],
+        "SaltStack": ["Master/Minion", "SSH", "Salt Cloud"]
+      },
+      "Sistemas Operacionais": {
+        "Windows Server": ["2008", "2012", "2016", "2019", "2022", "2025"],
+        "Linux": ["Ubuntu", "Debian", "CentOS", "Rocky", "AlmaLinux", "RHEL", "SUSE", "Fedora"]
+      },
+      "Bancos de Dados": {
+        "MySQL": [],
+        "PostgreSQL": [],
+        "MariaDB": [],
+        "MongoDB": [],
+        "SQL Server": [],
+        "Oracle": [],
+        "Redis": [],
+        "Cassandra": []
+      },
+      "Ferramentas e Cloud": {
+        "Git": [],
+        "Kubernetes": ["Core", "Operators", "CNI", "CSI"],
+        "Docker": ["Engine", "Compose", "Swarm"],
+        "Terraform": ["Providers", "Modules"],
+        "Nginx": ["Web Server", "Reverse Proxy", "Ingress Controller"],
+        "GitHub": ["Actions", "Copilot"],
+        "Heroku": ["Apps", "Buildpacks"],
+        "AWS": ["EC2", "S3", "RDS", "Lambda", "EKS"],
+        "Azure": ["VM", "AKS", "App Service", "SQL DB"],
+        "OCI": ["Compute", "Autonomous DB"],
+        "Google Cloud": ["GKE", "BigQuery", "Cloud Run"],
+        "Cloudflare": ["DNS", "CDN", "WAF", "Zero Trust", "Workers"]
+      }
+    };
+
+    const categoria = document.getElementById("categoria");
+    const tecnologia = document.getElementById("tecnologia");
+    const subtec = document.getElementById("subtec");
+
+    // Preenche categorias
+    Object.keys(data).forEach(cat => {
+      let opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      categoria.appendChild(opt);
+    });
+
+    categoria.addEventListener("change", () => {
+      tecnologia.innerHTML = "";
+      subtec.innerHTML = "";
+      const tecs = Object.keys(data[categoria.value]);
+      tecs.forEach(tec => {
+        let opt = document.createElement("option");
+        opt.value = tec;
+        opt.textContent = tec;
+        tecnologia.appendChild(opt);
+      });
+      tecnologia.dispatchEvent(new Event("change"));
+    });
+
+    tecnologia.addEventListener("change", () => {
+      subtec.innerHTML = "";
+      const subs = data[categoria.value][tecnologia.value];
+      if (subs.length === 0) {
+        let opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "(sem subtecnologias)";
+        subtec.appendChild(opt);
+      } else {
+        subs.forEach(st => {
+          let opt = document.createElement("option");
+          opt.value = st;
+          opt.textContent = st;
+          subtec.appendChild(opt);
+        });
+      }
+    });
+
+    categoria.dispatchEvent(new Event("change"));
+
+    function gerarBadge() {
+      const tec = tecnologia.value;
+      const st = subtec.value;
+      const tipo = document.getElementById("tipo").value;
+      const estilo = document.getElementById("estilo").value;
+
+      let label = st ? `${tec} ${st}` : tec;
+      let url = "";
+
+      if (tipo === "shields") {
+        url = `https://img.shields.io/badge/${encodeURIComponent(label)}-0078D4?style=${estilo}&logo=${encodeURIComponent(tec.toLowerCase())}&logoColor=white`;
+      } else {
+        url = `https://custom-icon-badges.demolab.com/badge/${encodeURIComponent(label)}-0078D4.svg?logo=${encodeURIComponent(tec.toLowerCase())}&logoColor=white&style=${estilo}`;
+      }
+
+      document.getElementById("preview").innerHTML = `
+        <h3>Preview:</h3>
+        <img src="${url}" alt="badge"><br>
+        <h3>Markdown:</h3>
+        <pre>![${label}](${url})</pre>
+        <h3>URL:</h3>
+        <pre>${url}</pre>
+      `;
+    }
+  </script>
+</body>
+</html>

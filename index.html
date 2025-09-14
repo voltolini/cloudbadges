@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Badges</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f7;
+      margin: 20px;
+      color: #333;
+    }
+    .layout {
+      display: flex;
+      gap: 20px;
+    }
+    .container, .sidebar {
+      flex: 1;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    select, button, input {
+      padding: 8px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      cursor: pointer;
+      background: #0078D4;
+      color: white;
+      font-weight: bold;
+      border: none;
+    }
+    button:hover {
+      background: #005ea1;
+    }
+    .preview {
+      margin-top: 20px;
+    }
+    img {
+      margin: 10px 0;
+      max-height: 40px;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .badge-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Coluna principal -->
+    <div class="container">
+      <h2>Gerador de Badges 🚀</h2>
+
+      <label>Categoria:</label>
+      <select id="categoria">
+        <option value="">Selecione</option>
+      </select>
+
+      <label>Tecnologia/Fabricante:</label>
+      <select id="tecnologia">
+        <option value="">Selecione</option>
+      </select>
+
+      <label>Subtecnologia/Solução:</label>
+      <select id="subtec">
+        <option value="">Selecione</option>
+      </select>
+
+      <label>Tipo de Badge:</label>
+      <select id="tipo">
+        <option value="">Selecione</option>
+        <option value="shields">shields.io</option>
+        <option value="custom">custom-icon-badges.demolab.com</option>
+      </select>
+
+      <label>Estilo:</label>
+      <select id="estilo">
+        <option value="">Selecione</option>
+        <option value="flat">flat</option>
+        <option value="flat-square">flat-square</option>
+        <option value="plastic">plastic</option>
+        <option value="for-the-badge">for-the-badge</option>
+        <option value="social">social</option>
+      </select>
+
+      <button onclick="gerarBadge()">Gerar Badge</button>
+
+      <div class="preview" id="preview"></div>
+    </div>
+
+    <!-- Coluna lateral -->
+    <div class="sidebar">
+      <h2>Badges já criadas ✅</h2>
+      <div id="lista-badges"></div>
+    </div>
+  </div>
+
+  <script>
+    // Lista fixa de badges criadas
+    const badgesProntas = [
+      "https://img.shields.io/badge/HTML-%23E34F26.svg?logo=html5&logoColor=white",
+      "https://img.shields.io/badge/Bash-4EAA25?logo=gnubash&logoColor=fff",
+      "https://img.shields.io/badge/Markdown-%23000000.svg?logo=markdown&logoColor=white",
+      "https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff",
+      "https://img.shields.io/badge/
